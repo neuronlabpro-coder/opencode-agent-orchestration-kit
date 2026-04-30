@@ -41,7 +41,7 @@ evaluator -> debugger -> evolver -> lead approval -> developer -> evaluator -> d
 ## Quick install
 
 ```bash
-git clone https://github.com/<owner>/opencode-agent-orchestration-kit.git
+git clone https://github.com/jcarlosrodicio/opencode-agent-orchestration-kit.git
 cd opencode-agent-orchestration-kit
 ./install.sh
 ```
