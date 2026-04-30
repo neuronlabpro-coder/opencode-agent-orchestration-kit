@@ -1,12 +1,16 @@
 # Superpowers
 
-Superpowers is enabled through the OpenCode plugin:
+Superpowers is not vendored in this repository.
+
+The starter config references it through the upstream OpenCode plugin:
 
 ```json
 {
   "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"]
 }
 ```
+
+When OpenCode starts, the plugin is resolved from upstream if plugin support and network access are available. If you keep an existing `opencode.json`, you must add the plugin entry yourself.
 
 It provides workflow skills for:
 

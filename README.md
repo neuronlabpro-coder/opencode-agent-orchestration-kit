@@ -32,11 +32,19 @@ Optional harness-evolution flow:
 evaluator -> debugger -> evolver -> lead approval -> developer -> evaluator -> debugger -> reviewer
 ```
 
-## Included skills
+## Skills and integrations
 
-- `open-design`: included in `opencode/skills/open-design`. It wraps Open Design workbench usage through `OPEN_DESIGN_URL` and the `open_design_*` tools.
-- `superpowers`: enabled through the upstream OpenCode plugin `superpowers@git+https://github.com/obra/superpowers.git`. It adds workflow discipline for brainstorming, planning, TDD, debugging, verification, code review, and branch completion.
-- `impeccable`: optional upstream skill. The `designer` uses it only when `PRODUCT.md` or `DESIGN.md` are missing and design context must be created or proposed.
+Included locally:
+
+- `open-design`: shipped in this repo at `opencode/skills/open-design`. It wraps Open Design workbench usage through `OPEN_DESIGN_URL` and the `open_design_*` tools.
+
+Referenced from upstream:
+
+- `superpowers`: not vendored in this repo. It is enabled through the upstream OpenCode plugin `superpowers@git+https://github.com/obra/superpowers.git`, so OpenCode downloads/loads it from upstream when plugins are supported and network access is available.
+
+Optional, user-installed:
+
+- `impeccable`: not included in this repo. Install it from upstream if you want `designer` to use it when `PRODUCT.md` or `DESIGN.md` are missing.
 
 ## Quick install
 
@@ -78,7 +86,7 @@ The installer copies agents, commands, skills, and tools to `${OPENCODE_CONFIG_D
 ./install.sh --force
 ```
 
-If your existing `opencode.json` was preserved, add Superpowers manually:
+If your existing `opencode.json` was preserved, add Superpowers manually. This references the upstream plugin; it does not copy Superpowers into this repository:
 
 ```json
 {
