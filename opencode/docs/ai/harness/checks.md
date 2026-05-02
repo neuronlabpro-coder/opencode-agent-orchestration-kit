@@ -22,7 +22,17 @@ The harness check validates:
 - local `/feature` contract;
 - main docs in `docs/ai/harness/`;
 - benchmark references to replay and evidence taxonomy;
+- AHE run lifecycle under `docs/ai/evolution/runs/`;
 - AHE manifests when present.
+
+## AHE Run Lifecycle
+
+- A run with `evaluation.md` but no `analysis/overview.md` and no
+  `change_manifest.json` is a valid evaluator -> debugger intermediate state.
+  The check must not reject it as a completed run.
+- Once `change_manifest.json` exists, the run has entered proposal or apply
+  phase: the check requires `analysis/overview.md`, validates the manifest, and
+  requires `change_evaluation.json` so shape or closure errors are not hidden.
 
 ## Lightweight Doc Gardening
 

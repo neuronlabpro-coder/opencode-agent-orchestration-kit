@@ -47,13 +47,26 @@ Criteria:
 
 ## `/evolve`
 
-Contract: `evaluator -> debugger -> evolver -> lead approval -> developer -> evaluator -> debugger -> reviewer`.
+Full contract for real harness changes: `evaluator -> debugger -> evolver -> lead approval -> developer -> evaluator -> debugger -> reviewer`.
+
+Allowed no-apply branches:
+
+- `evaluation-only`: stops after `evaluator` when the user requested audit or
+  evaluation only and did not authorize analysis, manifest, or implementation.
+- `debugger-only` / `no-apply` / `no-manifest`: stops after `debugger` with root
+  causes, falsification criteria, and handoff; it does not invoke `evolver` or
+  `developer`.
 
 Criteria:
 
 - No changes without concrete evidence.
-- Every applied change needs `change_manifest.json`.
-- The next measurement needs `change_evaluation.json`.
+- Every applied change needs a valid `change_manifest.json` and approval to
+  apply.
+- Manifest, developer, and implementation are conditional on sufficient
+  evidence, user scope, and approval; they are not mandatory outputs of
+  evaluation-only or debugger-only branches.
+- The next measurement needs `change_evaluation.json` when a manifest/change was
+  applied or previous changes are being evaluated.
 - Do not promise automatic rollback without git.
 
 ## `/review`

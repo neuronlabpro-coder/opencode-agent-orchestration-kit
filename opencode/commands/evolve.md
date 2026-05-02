@@ -1,5 +1,5 @@
 ---
-description: Run an optional AHE iteration to improve this OpenCode harness with evidence and attribution.
+description: Run an optional AHE iteration to evaluate or improve this OpenCode harness with evidence and attribution.
 agent: lead
 ---
 
@@ -8,7 +8,10 @@ Evolve the OpenCode harness:
 
 $ARGUMENTS
 
-Run the optional AHE flow. This is for agents, commands, skills, tools, workflows, or harness memory, not app features.
+Run the AHE flow that matches the requested scope. The full flow remains
+mandatory for real harness changes; audit-only branches have explicit stop
+conditions. This is for agents, commands, skills, tools, workflows, or harness
+memory, not app features.
 
 ## Preconditions
 
@@ -19,11 +22,42 @@ Run the optional AHE flow. This is for agents, commands, skills, tools, workflow
 ## Flow
 
 1. Invoke `evaluator` for benchmark/smoke evidence.
-2. Invoke `debugger` for patterns and root causes.
-3. Invoke `evolver` only if evidence is sufficient.
-4. Review the proposed manifest.
-5. If approved, invoke `developer` for bounded harness changes.
-6. Re-run evaluator.
-7. Re-run debugger for attribution.
-8. Invoke reviewer against diff, manifest, and evaluation.
-9. Close with keep / improve / rollback+pivot.
+2. If the user requested evaluation/audit only and did not authorize analysis,
+   manifest, or implementation, stop here with results, limitations, and the
+   next handoff; do not create a manifest.
+3. Invoke `debugger` for patterns and root causes when there are results or
+   traces to attribute.
+4. If the scope is debugger-only, no-apply, or no-manifest, stop here with root
+   causes, falsification criteria, and recommendation; do not invoke `evolver`
+   or `developer`.
+5. Invoke `evolver` only if evidence is sufficient and the user scope allows
+   harness change proposals.
+6. Review the proposed manifest.
+7. If the manifest is valid and applying is approved, invoke `developer` for
+   bounded harness changes.
+8. Re-run evaluator.
+9. Re-run debugger for attribution.
+10. Invoke reviewer against diff, manifest, and evaluation.
+11. Close with keep / improve / rollback+pivot.
+
+## Rules
+
+- Do not accept changes without concrete evidence.
+- Do not accept changes without predicted fixes and risk tasks.
+- Do not mix independent patterns into a single change.
+- Do not promise automatic rollback without git.
+- Do not modify LLM config, models, credentials, or providers to simulate
+  improvement.
+- Create or update a manifest only when evidence is sufficient, the user scope
+  allows change proposals, and the flow reached `evolver`.
+- Do not invoke `developer` or apply changes without a valid manifest and
+  explicit approval to apply.
+
+## Expected Result
+
+- Evaluated iteration.
+- Manifest created or updated only when the branch reached a change proposal.
+- Previous-change evaluation when applicable.
+- Changes applied, if approved.
+- Validations run.
+- Final decision and risks.

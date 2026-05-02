@@ -163,10 +163,14 @@ function checkEvolutionRuns() {
     const runPath = path.join(runsDir, name);
     if (!fs.statSync(runPath).isDirectory()) continue;
     const rel = `docs/ai/evolution/runs/${name}`;
-    if (!exists(`${rel}/evaluation.md`)) fail(`${rel}: missing evaluation.md`);
-    if (!exists(`${rel}/analysis/overview.md`)) fail(`${rel}: missing analysis/overview.md`);
-    if (exists(`${rel}/change_manifest.json`)) validateManifest(`${rel}/change_manifest.json`);
-    if (exists(`${rel}/change_manifest.json`) && !exists(`${rel}/change_evaluation.json`)) {
+    const hasEvaluation = exists(`${rel}/evaluation.md`);
+    const hasAnalysis = exists(`${rel}/analysis/overview.md`);
+    const hasManifest = exists(`${rel}/change_manifest.json`);
+
+    if (!hasEvaluation) fail(`${rel}: missing evaluation.md`);
+    if (hasManifest && !hasAnalysis) fail(`${rel}: missing analysis/overview.md`);
+    if (hasManifest) validateManifest(`${rel}/change_manifest.json`);
+    if (hasManifest && !exists(`${rel}/change_evaluation.json`)) {
       fail(`${rel}: manifest exists without change_evaluation.json`);
     }
     if (exists(`${rel}/change_evaluation.json`)) parseJson(`${rel}/change_evaluation.json`);
