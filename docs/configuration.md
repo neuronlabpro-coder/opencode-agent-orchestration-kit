@@ -14,6 +14,6 @@ The kit is organized as an OpenCode config directory:
 
 The default permissions are conservative: reads are allowed, edits and bash ask by default, and external directories are denied.
 
-The default agent is `developer`, with `mode: all`, so free-form small changes can be implemented directly. Slash commands still route to their explicit agents, for example `/feature` to `lead`, `/scope` to `scoper`, and `/design` to `designer`.
+The default agent is `developer`, with `mode: all`, so free-form small changes can be implemented directly. Slash commands still route to their explicit agents, for example `/feature` and `/plan` to `lead`, `/scope` to `scoper`, and `/design` to `designer`.
 
 Run `node scripts/check-harness.mjs` from an installed OpenCode config directory to validate the core harness contracts. In this repository, `npm run check` runs the same validator against `opencode/`.

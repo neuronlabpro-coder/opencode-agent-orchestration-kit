@@ -98,6 +98,23 @@ function checkFeatureContract() {
   }
 }
 
+function checkPlanContract() {
+  const rel = "commands/plan.md";
+  if (!exists(rel)) {
+    fail(`${rel}: missing plan command`);
+    return;
+  }
+
+  const text = read(rel);
+  for (const token of [
+    "lead -> researcher -> specifier -> reviewer",
+    "Do not invoke developer",
+    "1 correction pass",
+  ]) {
+    if (!text.includes(token)) fail(`${rel}: missing ${token}`);
+  }
+}
+
 function checkHarnessDocs() {
   const required = [
     "docs/ai/harness/README.md",
@@ -180,6 +197,7 @@ function checkEvolutionRuns() {
 checkConfig();
 checkFrontmatter();
 checkFeatureContract();
+checkPlanContract();
 checkHarnessDocs();
 checkEvolutionRuns();
 

@@ -25,6 +25,23 @@ Criteria:
 - `developer` does not act without acceptance criteria.
 - `reviewer` does not act without a reviewable diff.
 
+## `/plan`
+
+Contract: `lead -> researcher -> specifier -> reviewer`.
+
+Criteria:
+
+- No implementation and no `developer`.
+- No `designer`; if design is needed, declare that dependency or recommend
+  `/design` or `/feature`.
+- `researcher` always acts first and returns context, alternatives, risks, and a
+  recommendation.
+- `specifier` acts only after the lead synthesis of research.
+- `reviewer` reviews the plan/spec even when there is no diff.
+- If reviewer finds significant issues, lead allows exactly `1` correction pass.
+- After the second review, lead delivers the plan with risks or declares a
+  blocked state; it does not open more cycles.
+
 ## `/scope`
 
 Contract: `scoper -> researcher -> scoper synthesis -> specifier`.

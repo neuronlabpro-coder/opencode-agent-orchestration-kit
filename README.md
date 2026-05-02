@@ -22,6 +22,12 @@ Scoped research/spec flow:
 scoper -> researcher -> scoper synthesis -> specifier
 ```
 
+Plan-only flow:
+
+```text
+lead -> researcher -> specifier -> reviewer
+```
+
 Design flow:
 
 ```text
@@ -148,13 +154,14 @@ Do not expose Open Design directly to the Internet without authentication, VPN, 
 
 ```text
 /feature Create onboarding with plan selection and welcome screen
+/plan Add a dry-run flag to the harness check without implementing it yet
 /scope Research Stripe Checkout integration and generate an MVP spec
 /mvp-spec Email notifications when an agent finishes a task
 /design Read PRODUCT.md and DESIGN.md, create an editable Open Design project, and generate a first version
 /review
 ```
 
-Without a slash command, simple implementation requests go directly through `developer`. Use `/feature` when you want the full orchestration flow.
+Without a slash command, simple implementation requests go directly through `developer`. Use `/plan` when you want research, spec, and reviewer feedback without implementation; use `/feature` when you want the full orchestration flow.
 
 ## Validate the kit
 

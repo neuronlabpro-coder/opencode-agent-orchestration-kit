@@ -12,6 +12,12 @@ If the request has ambiguity, visual/product impact, medium or large scope, or c
 
 The lead decides whether design or research is needed. Specifier waits for relevant discovery. Developer waits for spec. Reviewer waits for diff.
 
+## Plan
+
+`lead -> researcher -> specifier -> reviewer`
+
+Plan-only mode always starts with researcher, then specifier creates the implementation-ready plan, and reviewer audits the plan/spec without requiring a diff. It never invokes developer and allows only one correction pass before returning the plan with risks or a blocked state.
+
 ## Scope
 
 `scoper -> researcher -> scoper synthesis -> specifier`

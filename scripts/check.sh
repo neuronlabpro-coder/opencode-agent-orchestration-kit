@@ -18,6 +18,7 @@ opencode/AGENTS.md
 opencode/opencode.json
 opencode/tools/open_design.ts
 opencode/scripts/check-harness.mjs
+opencode/commands/plan.md
 opencode/docs/ai/harness/README.md
 opencode/docs/ai/harness/agents.md
 opencode/docs/ai/harness/commands.md
@@ -86,6 +87,7 @@ grep -q 'specifier: allow' opencode/agents/scoper.md
 grep -q 'Never invoke `developer` before' opencode/agents/lead.md
 grep -q 'Never invoke `reviewer` before' opencode/agents/lead.md
 grep -q 'agent: lead' opencode/commands/feature.md
+grep -q 'agent: lead' opencode/commands/plan.md
 grep -q 'agent: scoper' opencode/commands/scope.md
 grep -q 'agent: designer' opencode/commands/design.md
 grep -q 'evaluator' opencode/commands/evolve.md

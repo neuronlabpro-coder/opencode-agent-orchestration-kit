@@ -20,6 +20,7 @@ The harness check validates:
 - `default_agent: developer`;
 - minimum frontmatter in `agents/*.md` and `commands/*.md`;
 - local `/feature` contract;
+- local `/plan` contract;
 - main docs in `docs/ai/harness/`;
 - benchmark references to replay and evidence taxonomy;
 - AHE run lifecycle under `docs/ai/evolution/runs/`;

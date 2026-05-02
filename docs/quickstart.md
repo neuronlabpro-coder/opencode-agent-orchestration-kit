@@ -23,7 +23,15 @@ Use the base URL only.
 
 Expected flow: researcher -> scoper synthesis -> specifier.
 
-## 4. Try direct mode
+## 4. Try plan
+
+```text
+/plan Add a dry-run flag to the harness check without implementing it yet
+```
+
+Expected flow: lead -> researcher -> specifier -> reviewer, with no implementation.
+
+## 5. Try direct mode
 
 ```text
 Change the Settings heading to Account settings and run the smallest relevant validation.
@@ -31,7 +39,7 @@ Change the Settings heading to Account settings and run the smallest relevant va
 
 Expected flow: developer handles the small change directly. No full feature orchestration.
 
-## 5. Try design
+## 6. Try design
 
 ```text
 /design Read PRODUCT.md and DESIGN.md, create an editable Open Design project for onboarding, and return the URL
@@ -39,7 +47,7 @@ Expected flow: developer handles the small change directly. No full feature orch
 
 Expected flow: designer checks docs, optionally uses Impeccable, then uses Open Design.
 
-## 6. Try feature
+## 7. Try feature
 
 ```text
 /feature Add a small settings page with a saved theme preference
@@ -47,10 +55,10 @@ Expected flow: designer checks docs, optionally uses Impeccable, then uses Open 
 
 Expected flow: lead decides research/design needs, then specifier -> developer -> reviewer.
 
-## 7. Validate harness contracts
+## 8. Validate harness contracts
 
 ```bash
 npm run check
 ```
 
-The check validates config JSON, agent/command frontmatter, the default `developer` direct mode, `/feature` sidecar boundaries, and the agent-readable docs under `opencode/docs/ai/harness/`.
+The check validates config JSON, agent/command frontmatter, the default `developer` direct mode, `/feature` sidecar boundaries, the `/plan` contract, and the agent-readable docs under `opencode/docs/ai/harness/`.

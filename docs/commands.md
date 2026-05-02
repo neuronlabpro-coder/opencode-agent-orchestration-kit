@@ -1,6 +1,7 @@
 # Commands
 
 - `/feature`: full feature orchestration.
+- `/plan`: research, implementation-ready spec, and reviewer pass with no implementation.
 - `/scope`: research plus scoped spec, no implementation.
 - `/mvp-spec`: strict MVP spec with small tasks and clear out of scope.
 - `/design`: design via PRODUCT.md/DESIGN.md, optional Impeccable, and Open Design.
