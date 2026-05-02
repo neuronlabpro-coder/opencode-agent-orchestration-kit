@@ -4,8 +4,8 @@
 
 | Agent | Use when | Do not use when | Expected evidence |
 | --- | --- | --- | --- |
-| `developer` | Change is small, clear, approved, or direct without slash command | Critical decision, design, or research is missing | Validation run or explicit reason |
-| `lead` | Slash workflow, coordination, or phase dependencies are needed | Free-form request is small and localized | Assumptions, criteria, and barriers respected |
+| `developer` | Change is small, clear, approved, or delegated by lead | Critical decision, design, or research is missing | Validation run or explicit reason |
+| `lead` | Free-form message without slash command, slash workflow, coordination, or phase dependencies | The task was already delegated to another agent | Routing decision, assumptions, criteria, and barriers respected |
 | `designer` | UX/UI, brand, layout, interaction, or Open Design matters | Technical change has no visual impact | Visual handoff with observable criteria |
 | `researcher` | Technical/product uncertainty, APIs, libraries, risks | Fact is already clear in repo | Sources reviewed and unknowns remaining |
 | `specifier` | There is enough context to turn goal into tasks | Critical research/design is pending | Acceptance criteria and validation plan |
@@ -17,8 +17,9 @@
 
 ## Invariants
 
-- `developer` is the harness `default_agent`.
+- `lead` is the harness `default_agent` and acts as a bounded router for free-form messages.
 - `lead` must not force the full flow for small free-form messages.
+- `developer` executes direct mode when `lead` delegates a small, clear, verifiable task.
 - `specifier` waits for research/design when those results affect requirements.
 - `reviewer` waits for a diff, reviewable implementation, or `/plan` artifact.
 - `evaluator`, `debugger`, and `evolver` are optional sidecars.

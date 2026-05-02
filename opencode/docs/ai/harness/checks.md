@@ -17,7 +17,7 @@ npm run check
 The harness check validates:
 
 - `opencode.json`;
-- `default_agent: developer`;
+- `default_agent: lead`;
 - minimum frontmatter in `agents/*.md` and `commands/*.md`;
 - local `/feature` contract;
 - local `/plan` contract;

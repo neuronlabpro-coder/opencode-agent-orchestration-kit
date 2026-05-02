@@ -70,8 +70,23 @@ function requireFields(rel, object, fields) {
 function checkConfig() {
   const config = parseJson("opencode.json");
   if (!config) return;
-  if (config.default_agent !== "developer") {
-    fail("opencode.json: default_agent must remain developer");
+  if (config.default_agent !== "lead") {
+    fail("opencode.json: default_agent must remain lead");
+  }
+}
+
+function checkLeadRouterContract() {
+  const text = read("agents/lead.md");
+  for (const token of [
+    "fast router",
+    "developer",
+    "researcher",
+    "designer",
+    "specifier",
+    "Ask the user",
+    "real ambiguity",
+  ]) {
+    if (!text.includes(token)) fail(`agents/lead.md: missing ${token}`);
   }
 }
 
@@ -196,6 +211,7 @@ function checkEvolutionRuns() {
 
 checkConfig();
 checkFrontmatter();
+checkLeadRouterContract();
 checkFeatureContract();
 checkPlanContract();
 checkHarnessDocs();

@@ -6,7 +6,7 @@ This file is the short map for the harness. Detailed contracts live in
 ## Work model
 
 - For normal messages without a slash command, use the simplest path.
-- If a change is small, clear, and low risk, direct mode goes to `developer`.
+- If a change is small, clear, and low risk, `lead` decides quickly and usually delegates direct mode to `developer`.
 - Full flows activate through slash commands such as `/feature`, `/plan`,
   `/scope`, `/design`, `/review`, or `/evolve`.
 - Before implementing, understand the stack, scope, and minimum validation.
@@ -29,7 +29,7 @@ See `docs/ai/harness/agents.md` for full contracts.
 
 ## Base flows
 
-- Small free-form request: `developer`.
+- Small free-form request: `lead` decides and usually delegates to `developer`.
 - Full feature: `lead -> designer if applicable -> researcher -> specifier -> developer -> reviewer`.
 - Plan without implementation: `lead -> researcher -> specifier -> reviewer`.
 - Scope/spec without implementation: `scoper -> researcher -> scoper synthesis -> specifier`.

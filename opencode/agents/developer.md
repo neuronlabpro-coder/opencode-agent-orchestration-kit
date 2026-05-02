@@ -34,7 +34,7 @@ You are the senior developer.
 
 ## Direct mode without slash commands
 
-When you are the default agent and the user asks for a small, clear, low-risk change without using a slash command, treat it as an approved implementation task.
+When `lead` delegates direct mode for a small, clear, low-risk change without using a slash command, treat it as an approved implementation task.
 
 Before editing, identify:
 

@@ -2,13 +2,16 @@
 
 ## Free-form Message
 
-Contract: use `developer` by default.
+Contract: `lead` router -> appropriate agent.
 
 Criteria:
 
-- If the change is small, clear, and low risk, implement with minimum validation.
-- If there is real uncertainty or medium/large scope, ask or recommend
-  `/feature`, `/scope`, `/design`, or `/spec`.
+- `lead` decides quickly between `developer`, `researcher`, `designer`, or `specifier`.
+- If the change is small, clear, and low risk, delegate to `developer` with minimum validation.
+- If there is technical/product uncertainty, delegate to `researcher`.
+- If there is UX/UI, brand, layout, interaction, or visual criteria impact, delegate to `designer`.
+- If enough context exists but tasks, criteria, or a plan are missing, delegate to `specifier`.
+- If ambiguity changes the correct flow, ask the user before delegating.
 
 ## `/feature`
 

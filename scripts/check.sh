@@ -71,7 +71,7 @@ console.log('frontmatter ok')
 NODE
 
 grep -q 'superpowers@git+https://github.com/obra/superpowers.git' opencode/opencode.json
-grep -q '"default_agent": "developer"' opencode/opencode.json
+grep -q '"default_agent": "lead"' opencode/opencode.json
 
 grep -q 'Open Design' README.md
 grep -q 'Superpowers' README.md
@@ -83,6 +83,8 @@ grep -q '"superpowers"' opencode/agents/designer.md && { echo 'designer should n
 grep -q 'mode: all' opencode/agents/developer.md
 grep -q 'Direct mode without slash commands' opencode/agents/developer.md
 grep -q 'Default behavior without slash commands' opencode/agents/lead.md
+grep -q 'fast router' opencode/agents/lead.md
+grep -q 'Ask the user' opencode/agents/lead.md
 
 grep -q 'researcher: allow' opencode/agents/scoper.md
 grep -q 'specifier: allow' opencode/agents/scoper.md

@@ -2,12 +2,12 @@
 
 ## Core agents
 
-- `lead`: orchestrates feature work and enforces phase barriers.
+- `lead`: default free-form router, feature orchestrator, and phase-barrier owner.
 - `scoper`: lightweight research -> spec orchestrator.
 - `designer`: uses PRODUCT.md/DESIGN.md, optional Impeccable, and Open Design.
 - `researcher`: verifies code, docs, APIs, alternatives, and risks.
 - `specifier`: produces specs, tasks, acceptance criteria, and validation plans.
-- `developer`: implements approved tasks and validates changes.
+- `developer`: implements approved tasks, including direct-mode work delegated by lead, and validates changes.
 - `reviewer`: reviews diffs against spec and returns verdicts.
 
 ## Optional AHE sidecars

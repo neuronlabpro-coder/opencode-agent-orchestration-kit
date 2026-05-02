@@ -8,7 +8,7 @@ This repository is not affiliated with OpenCode, Open Design, Impeccable, or Sup
 
 ## Architecture
 
-By default, free-form messages open with `developer` for small, clear, low-risk changes. Use slash commands when you want an explicit workflow.
+By default, free-form messages open with `lead` as a bounded router. Lead quickly chooses `developer`, `researcher`, `designer`, or `specifier`, and asks the user when ambiguity changes the correct flow. Small, clear, low-risk changes are usually delegated straight to `developer`.
 
 Core feature flow:
 

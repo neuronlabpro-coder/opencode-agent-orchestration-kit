@@ -2,9 +2,9 @@
 
 ## Direct mode
 
-Free-form messages without a slash command use `developer` by default. This is intended for small, clear, low-risk changes where a full product-development pipeline would be unnecessary.
+Free-form messages without a slash command use `lead` by default as a bounded router. This keeps the simplest path for small, clear, low-risk changes while avoiding silent guesses when the right flow is unclear.
 
-If the request has ambiguity, visual/product impact, medium or large scope, or critical missing context, switch to `/feature`, `/scope`, `/design`, or `/spec`.
+Lead decides quickly between `developer`, `researcher`, `designer`, or `specifier`. It delegates small direct work to `developer`, routes uncertainty to `researcher`, visual/product work to `designer`, planning gaps to `specifier`, and asks the user when ambiguity changes the right path.
 
 ## Feature
 

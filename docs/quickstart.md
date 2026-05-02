@@ -31,13 +31,13 @@ Expected flow: researcher -> scoper synthesis -> specifier.
 
 Expected flow: lead -> researcher -> specifier -> reviewer, with no implementation.
 
-## 5. Try direct mode
+## 5. Try bounded direct routing
 
 ```text
 Change the Settings heading to Account settings and run the smallest relevant validation.
 ```
 
-Expected flow: developer handles the small change directly. No full feature orchestration.
+Expected flow: lead chooses the direct path and delegates the small change to developer. No full feature orchestration.
 
 ## 6. Try design
 
@@ -61,4 +61,4 @@ Expected flow: lead decides research/design needs, then specifier -> developer -
 npm run check
 ```
 
-The check validates config JSON, agent/command frontmatter, the default `developer` direct mode, `/feature` sidecar boundaries, the `/plan` contract, and the agent-readable docs under `opencode/docs/ai/harness/`.
+The check validates config JSON, agent/command frontmatter, the default `lead` router contract, `/feature` sidecar boundaries, the `/plan` contract, and the agent-readable docs under `opencode/docs/ai/harness/`.
