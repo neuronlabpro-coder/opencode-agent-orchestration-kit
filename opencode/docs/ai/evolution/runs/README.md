@@ -1,13 +1,15 @@
 # Evolution Runs
 
-Cada iteración AHE debe crear un subdirectorio `iteration-XXX`.
+Each AHE iteration should create an `iteration-XXX-*` directory.
 
-Contenido recomendado:
+Expected files:
 
-- `evaluation.md`: escenarios ejecutados y resultados.
-- `analysis/overview.md`: resumen de patrones.
-- `analysis/detail/*.md`: root causes por patrón o escenario.
-- `change_manifest.json`: cambios propuestos/aplicados en esta iteración.
-- `change_evaluation.json`: atribución de la iteración previa contra resultados actuales.
+- `evaluation.md`: evaluator evidence and scenario results.
+- `analysis/overview.md`: debugger synthesis and root causes.
+- `analysis/detail/*.md`: optional deeper evidence per pattern or scenario.
+- `change_manifest.json`: proposed or applied changes for the iteration.
+- `change_evaluation.json`: attribution of the previous change against later
+  results.
 
-No guardes secretos, credenciales ni salidas completas innecesarias.
+Evaluation-only runs may contain only `evaluation.md` while work is in progress.
+When a manifest exists, the run also needs analysis and change evaluation.

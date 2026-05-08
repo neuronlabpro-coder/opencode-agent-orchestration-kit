@@ -15,6 +15,13 @@ permission:
     "git log*": allow
   webfetch: allow
   websearch: allow
+  skill:
+    "*": deny
+    "api-and-interface-design": allow
+    "documentation-and-adrs": allow
+    "performance-optimization": allow
+    "security-and-hardening": allow
+    "source-driven-development": allow
   external_directory: deny
 ---
 
@@ -31,6 +38,11 @@ Your responsibility is to reduce uncertainty before `specifier` creates tasks.
 - Do not propose dependencies without explaining cost, maintenance, and risk.
 - Separate facts, inferences, recommendations, and unknowns.
 - Highlight contradictions between assumptions and actual code.
+- If researching APIs, libraries, or framework patterns, use
+  `source-driven-development` to prioritize official documentation.
+- If the research touches contracts, auth, security, performance, or ADRs, use
+  the matching local skill as a checklist, not as a substitute for real repo
+  context.
 
 ## Output
 

@@ -19,7 +19,14 @@
 
 - `lead` is the harness `default_agent` and acts as a bounded router for free-form messages.
 - `lead` must not force the full flow for small free-form messages.
+- `lead` does not edit files; if implementation or correction requires repo
+  changes, delegate to `developer`.
 - `developer` executes direct mode when `lead` delegates a small, clear, verifiable task.
+- Once `developer` receives an implementation task, later adjustments for that
+  same free-form request go back to `developer`; `lead` only consolidates,
+  decides, or reroutes.
+- Local skills in `skills/` are process checklists for agents, not a new
+  mandatory orchestration layer.
 - `specifier` waits for research/design when those results affect requirements.
 - `reviewer` waits for a diff, reviewable implementation, or `/plan` artifact.
 - `evaluator`, `debugger`, and `evolver` are optional sidecars.

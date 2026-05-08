@@ -5,6 +5,7 @@
 ```bash
 cp env.example .env
 source .env
+(cd opencode && npm install)
 ```
 
 ## 2. Configure Open Design

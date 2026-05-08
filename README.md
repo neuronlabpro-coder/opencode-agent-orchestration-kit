@@ -1,6 +1,6 @@
 # opencode-agent-orchestration-kit
 
-A starter kit for configuring OpenCode with a product-development agent orchestration flow, Open Design integration, optional Impeccable design context, Superpowers workflow discipline, and optional AHE observability sidecars.
+A starter kit for configuring OpenCode with a product-development agent orchestration flow, Open Design integration, optional Impeccable design context, Superpowers workflow discipline, local process skills, a TUI token-usage plugin, and optional AHE observability sidecars.
 
 This project is for developers who want a reproducible global OpenCode setup without hand-writing agents, commands, skills, tools, and Docker notes from scratch.
 
@@ -46,12 +46,19 @@ Harness contracts are versioned inside the shipped OpenCode config:
 - `opencode/docs/ai/harness/`: agent, command, evidence, and check contracts.
 - `opencode/docs/ai/evolution/`: AHE benchmark and evolution records.
 - `opencode/scripts/check-harness.mjs`: local mechanical validation for the harness.
+- `opencode/plugins/token-tree-usage.tsx`: sidebar TUI plugin that reports lead
+  tokens and total tokens across child/subagent sessions when the OpenCode TUI
+  exposes session children.
 
 ## Skills and integrations
 
 Included locally:
 
 - `open-design`: shipped in this repo at `opencode/skills/open-design`. It wraps Open Design workbench usage through `OPEN_DESIGN_URL` and the `open_design_*` tools.
+- Process skills under `opencode/skills/` for source-driven development,
+  testing, debugging, API/interface design, review, simplification, security,
+  performance, and documentation/ADRs. Agents use them as checklists, not as
+  mandatory extra phases.
 
 Referenced from upstream:
 
@@ -74,6 +81,7 @@ Then configure your environment:
 ```bash
 cp env.example .env
 source .env
+(cd opencode && npm install)
 opencode auth login
 opencode
 ```
@@ -106,6 +114,15 @@ If your existing `opencode.json` was preserved, add Superpowers manually. This r
 ```json
 {
   "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"]
+}
+```
+
+If your existing `tui.json` was preserved, add the bundled token usage plugin
+manually:
+
+```json
+{
+  "plugin": ["./plugins/token-tree-usage.tsx"]
 }
 ```
 
@@ -158,6 +175,8 @@ Do not expose Open Design directly to the Internet without authentication, VPN, 
 /scope Research Stripe Checkout integration and generate an MVP spec
 /mvp-spec Email notifications when an agent finishes a task
 /design Read PRODUCT.md and DESIGN.md, create an editable Open Design project, and generate a first version
+/test Reproduce the checkout regression with a focused test
+/code-simplify Simplify the parser branch without changing behavior
 /review
 ```
 
@@ -208,6 +227,8 @@ export OPEN_DESIGN_URL="http://192.168.1.50:7456"
 - OpenCode does not appear in Open Design agents: run `opencode auth login` and ensure `opencode` is on `PATH`.
 - `crypto.randomUUID` fails on HTTP LAN: use HTTPS or the optional upstream frontend patch described in docs.
 - Superpowers skills do not load: restart OpenCode and verify the plugin line in `opencode.json`.
+- TUI token usage does not appear: verify `tui.json`, run `npm install` in the
+  OpenCode config directory, and restart OpenCode.
 - Designer cannot see Open Design: verify `OPEN_DESIGN_URL`, tool registration, and `opencode/tools/open_design.ts`.
 
 ## License

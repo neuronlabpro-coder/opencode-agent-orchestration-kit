@@ -1,6 +1,9 @@
 {
   "dependencies": {
-    "@opencode-ai/plugin": "1.14.31"
+    "@opencode-ai/plugin": "1.14.41",
+    "@opentui/core": "0.2.5",
+    "@opentui/solid": "0.2.5",
+    "solid-js": "1.9.12"
   },
   "overrides": {
     "uuid": "^14.0.0"

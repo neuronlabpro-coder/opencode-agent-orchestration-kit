@@ -7,6 +7,7 @@ git clone https://github.com/<owner>/opencode-agent-orchestration-kit.git
 cd opencode-agent-orchestration-kit
 export OPENCODE_CONFIG_DIR="$PWD/opencode"
 source env.example
+(cd opencode && npm install)
 opencode
 ```
 
@@ -14,6 +15,7 @@ opencode
 
 ```bash
 ./install.sh
+(cd "${OPENCODE_CONFIG_DIR:-$HOME/.config/opencode}" && npm install)
 ```
 
 Default target:
@@ -46,5 +48,14 @@ If `opencode.json` already exists, the installer preserves it unless `--force` i
 ```json
 {
   "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"]
+}
+```
+
+If `tui.json` already exists, the installer preserves it unless `--force` is
+used. Add the bundled token usage plugin manually if needed:
+
+```json
+{
+  "plugin": ["./plugins/token-tree-usage.tsx"]
 }
 ```

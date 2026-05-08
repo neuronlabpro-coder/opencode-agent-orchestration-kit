@@ -7,8 +7,13 @@ This file is the short map for the harness. Detailed contracts live in
 
 - For normal messages without a slash command, use the simplest path.
 - If a change is small, clear, and low risk, `lead` decides quickly and usually delegates direct mode to `developer`.
+- If `lead` has already delegated implementation to `developer`, any code
+  adjustment or correction for that same free-form request goes back to
+  `developer`; `lead` does not edit.
 - Full flows activate through slash commands such as `/feature`, `/plan`,
   `/scope`, `/design`, `/review`, or `/evolve`.
+- Auxiliary commands such as `/test` and `/code-simplify` trigger focused
+  checks without turning a small request into a full feature flow.
 - Before implementing, understand the stack, scope, and minimum validation.
 - At closure, summarize changes, validation, and risks.
 
@@ -47,6 +52,8 @@ See `docs/ai/harness/commands.md` for command contracts.
 - Do not introduce dependencies without justification.
 - Do not expand scope silently.
 - Do not close if required validation failed or was not run without saying why.
+- Use local skills as checklists when they fit; do not use them as an excuse to
+  add mandatory phases to simple changes.
 
 ## Superpowers discipline
 

@@ -16,12 +16,16 @@ uninstall.sh
 package.json
 opencode/AGENTS.md
 opencode/opencode.json
+opencode/tui.json
 opencode/.gitignore
 opencode/package.json
 opencode/package-lock.json
+opencode/plugins/token-tree-usage.tsx
 opencode/tools/open_design.ts
 opencode/scripts/check-harness.mjs
 opencode/commands/plan.md
+opencode/commands/test.md
+opencode/commands/code-simplify.md
 opencode/docs/ai/harness/README.md
 opencode/docs/ai/harness/agents.md
 opencode/docs/ai/harness/commands.md
@@ -59,7 +63,7 @@ node -e "JSON.parse(require('fs').readFileSync('opencode/opencode.json','utf8'))
 node <<'NODE'
 const fs = require('fs')
 const path = require('path')
-for (const dir of ['opencode/agents', 'opencode/commands', 'opencode/skills/open-design']) {
+for (const dir of ['opencode/agents', 'opencode/commands', ...fs.readdirSync('opencode/skills').map((name) => path.join('opencode/skills', name))]) {
   for (const file of fs.readdirSync(dir).filter((name) => name.endsWith('.md'))) {
     const full = path.join(dir, file)
     const text = fs.readFileSync(full, 'utf8')
@@ -72,6 +76,7 @@ NODE
 
 grep -q 'superpowers@git+https://github.com/obra/superpowers.git' opencode/opencode.json
 grep -q '"default_agent": "lead"' opencode/opencode.json
+grep -q './plugins/token-tree-usage.tsx' opencode/tui.json
 
 grep -q 'Open Design' README.md
 grep -q 'Superpowers' README.md
@@ -85,6 +90,9 @@ grep -q 'Direct mode without slash commands' opencode/agents/developer.md
 grep -q 'Default behavior without slash commands' opencode/agents/lead.md
 grep -q 'fast router' opencode/agents/lead.md
 grep -q 'Ask the user' opencode/agents/lead.md
+grep -q 'edit: deny' opencode/agents/lead.md
+grep -Fq '"cd *": allow' opencode/agents/lead.md
+grep -Fq '"which *": allow' opencode/agents/lead.md
 
 grep -q 'researcher: allow' opencode/agents/scoper.md
 grep -q 'specifier: allow' opencode/agents/scoper.md
@@ -97,6 +105,8 @@ grep -q 'agent: lead' opencode/commands/feature.md
 grep -q 'agent: lead' opencode/commands/plan.md
 grep -q 'agent: scoper' opencode/commands/scope.md
 grep -q 'agent: designer' opencode/commands/design.md
+grep -q 'agent: developer' opencode/commands/test.md
+grep -q 'agent: developer' opencode/commands/code-simplify.md
 grep -q 'evaluator' opencode/commands/evolve.md
 grep -q 'debugger' opencode/commands/evolve.md
 grep -q 'evolver' opencode/commands/evolve.md
@@ -114,13 +124,26 @@ if (rootPackage.dependencies?.['@opencode-ai/plugin']) {
 }
 
 const opencodePackage = JSON.parse(fs.readFileSync('opencode/package.json', 'utf8'))
-if (opencodePackage.dependencies?.['@opencode-ai/plugin'] !== '1.14.31') {
-  throw new Error('opencode/package.json must pin @opencode-ai/plugin to 1.14.31')
+if (opencodePackage.dependencies?.['@opencode-ai/plugin'] !== '1.14.41') {
+  throw new Error('opencode/package.json must pin @opencode-ai/plugin to 1.14.41')
+}
+if (opencodePackage.dependencies?.['@opentui/core'] !== '0.2.5') {
+  throw new Error('opencode/package.json must pin @opentui/core to 0.2.5')
+}
+if (opencodePackage.dependencies?.['@opentui/solid'] !== '0.2.5') {
+  throw new Error('opencode/package.json must pin @opentui/solid to 0.2.5')
+}
+if (opencodePackage.dependencies?.['solid-js'] !== '1.9.12') {
+  throw new Error('opencode/package.json must pin solid-js to 1.9.12')
 }
 if (opencodePackage.overrides?.uuid !== '^14.0.0') {
   throw new Error('opencode/package.json must override uuid to ^14.0.0')
 }
 NODE
+
+grep -q 'Lead' opencode/plugins/token-tree-usage.tsx
+grep -q 'Subagents' opencode/plugins/token-tree-usage.tsx
+grep -q 'Partial total' opencode/plugins/token-tree-usage.tsx
 
 private_re="$(printf '%s|%s|%s|%s' '/''Users/' 'synology''\\.me' 'auth''\\.json' 'OPENAI''_API_KEY')"
 if grep -R -nE "$private_re" . \

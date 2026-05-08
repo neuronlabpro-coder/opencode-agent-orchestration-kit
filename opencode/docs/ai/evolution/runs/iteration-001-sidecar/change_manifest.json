@@ -6,7 +6,7 @@
     {
       "id": "chg-1",
       "type": "improvement",
-      "description": "Propose aligning `/feature` command documentation with the preserved base flow by locally declaring `lead -> designer si aplica -> researcher -> specifier -> developer -> reviewer` and removing the designer/researcher order ambiguity, without changing sidecar behavior.",
+      "description": "Propose aligning `/feature` command documentation with the preserved base flow by locally declaring `lead -> designer if applicable -> researcher -> specifier -> developer -> reviewer` and removing the designer/researcher order ambiguity, without changing sidecar behavior.",
       "files": [
         "commands/feature.md"
       ],
@@ -18,7 +18,7 @@
         "docs/ai/evolution/runs/iteration-001-sidecar/analysis/overview.md:7-16",
         "docs/ai/evolution/runs/iteration-001-sidecar/analysis/overview.md:47-56"
       ],
-      "root_cause": "`commands/feature.md` does not locally declare the exact base flow required by the benchmark and lists `researcher` before `designer` (`commands/feature.md:17-18`), while `AGENTS.md`, `docs/ai/evolution/README.md`, and `agents/lead.md` declare `designer si aplica` before `researcher`.",
+      "root_cause": "`commands/feature.md` does not locally declare the exact base flow required by the benchmark and lists `researcher` before `designer` (`commands/feature.md:17-18`), while `AGENTS.md`, `docs/ai/evolution/README.md`, and `agents/lead.md` declare `designer if applicable` before `researcher`.",
       "predicted_fixes": [
         "feature-declares-base-flow-exactly",
         "feature-designer-researcher-order-ambiguity-removed"
@@ -33,7 +33,7 @@
       "proposal_scope": "Narrow proposed-only command documentation change; do not modify agents, skills, tools, model/provider configuration, credentials, or sidecar registration.",
       "evaluation_criteria_next_iteration": {
         "keep": [
-          "Static evaluation confirms `commands/feature.md` locally declares `lead -> designer si aplica -> researcher -> specifier -> developer -> reviewer`.",
+          "Static evaluation confirms `commands/feature.md` locally declares `lead -> designer if applicable -> researcher -> specifier -> developer -> reviewer`.",
           "Static evaluation confirms `/feature` does not list `researcher` before `designer` in a way that contradicts the base flow.",
           "Sidecar scenarios remain pass: evaluator/debugger/evolver are not made mandatory in normal `/feature` flow."
         ],

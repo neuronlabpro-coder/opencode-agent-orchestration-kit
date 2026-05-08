@@ -8,6 +8,8 @@
 - `/research`: direct researcher task.
 - `/spec`: direct specifier task.
 - `/implement`: direct developer task for approved work.
+- `/test`: focused validation or test-driven bug reproduction through `developer`.
+- `/code-simplify`: bounded behavior-preserving simplification through `developer`.
 - `/review`: direct reviewer task for current diff.
 - `/evolve`: optional AHE harness evolution flow.
 

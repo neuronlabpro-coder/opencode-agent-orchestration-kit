@@ -61,6 +61,14 @@ function parseFrontmatter(rel) {
   return data;
 }
 
+function frontmatterBlock(rel) {
+  const text = read(rel);
+  if (!text.startsWith("---\n")) return "";
+  const end = text.indexOf("\n---", 4);
+  if (end === -1) return "";
+  return text.slice(4, end);
+}
+
 function requireFields(rel, object, fields) {
   for (const field of fields) {
     if (!object[field]) fail(`${rel}: missing ${field}`);
@@ -77,6 +85,23 @@ function checkConfig() {
 
 function checkLeadRouterContract() {
   const text = read("agents/lead.md");
+  const frontmatter = frontmatterBlock("agents/lead.md");
+
+  if (!/^\s*edit:\s*deny\s*$/m.test(frontmatter)) {
+    fail("agents/lead.md: lead edit permission must remain deny");
+  }
+
+  for (const command of [
+    '"cd": allow',
+    '"cd *": allow',
+    '"which": allow',
+    '"which *": allow',
+  ]) {
+    if (!frontmatter.includes(command)) {
+      fail(`agents/lead.md: missing bash allow ${command}`);
+    }
+  }
+
   for (const token of [
     "fast router",
     "developer",
@@ -85,8 +110,21 @@ function checkLeadRouterContract() {
     "specifier",
     "Ask the user",
     "real ambiguity",
+    "Do not edit code",
+    "whole loop of the same free-form request",
+    "bounded task back to `developer`",
+    "implementation correction goes back to `developer`",
   ]) {
     if (!text.includes(token)) fail(`agents/lead.md: missing ${token}`);
+  }
+
+  const docs = read("docs/ai/harness/agents.md");
+  for (const token of [
+    "`lead` does not edit files",
+    "later adjustments for that",
+    "same free-form request go back to `developer`",
+  ]) {
+    if (!docs.includes(token)) fail(`docs/ai/harness/agents.md: missing ${token}`);
   }
 }
 

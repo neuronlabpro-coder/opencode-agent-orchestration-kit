@@ -32,6 +32,10 @@ jobs:
         working-directory: opencode
         run: npm audit --omit=dev --audit-level=moderate
 
+      - name: Typecheck TUI token plugin
+        working-directory: opencode
+        run: npx tsc --noEmit --jsx preserve --jsxImportSource @opentui/solid --module NodeNext --moduleResolution NodeNext --target ES2022 --strict --skipLibCheck plugins/token-tree-usage.tsx
+
       - name: Smoke import OpenCode plugin
         working-directory: opencode
         run: node --input-type=module -e "import('@opencode-ai/plugin').then(() => console.log('plugin import ok'))"

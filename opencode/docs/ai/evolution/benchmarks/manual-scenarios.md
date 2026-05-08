@@ -9,13 +9,13 @@ events.
 Free-form message:
 
 ```bash
-opencode run --format json --thinking --dir /path/to/repo "<prompt>"
+opencode run --format json --thinking --dir <repo-path> "<prompt>"
 ```
 
 Slash command:
 
 ```bash
-opencode run --format json --thinking --command <command> --dir /path/to/repo "<prompt>"
+opencode run --format json --thinking --command <command> --dir <repo-path> "<prompt>"
 ```
 
 ## Evidence Taxonomy

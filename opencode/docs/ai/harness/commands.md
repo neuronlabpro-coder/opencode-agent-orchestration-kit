@@ -23,6 +23,19 @@ Criteria:
   acceptance criteria matter.
 - `researcher` acts before `specifier` if technical uncertainty, APIs,
   libraries, risks, or architecture matter.
+- The first `lead` action in `/feature` is classification and handoff building
+  only: it may gather minimal routing context, but must not do substantive
+  discovery, broad repository/config inspection, or close technical conclusions
+  before delegating uncertainty to the correct agent.
+- If the request states or reveals technical/product/API/library/risk/
+  architecture uncertainty, the first substantive discovery on that topic is a
+  `researcher` task; the handoff includes objective, uncertainty, constraints,
+  and expected evidence without pre-resolving the question.
+- If the request states or reveals UX/UI, brand, layout, interaction, or visual
+  criteria uncertainty, the first substantive discovery on that topic is
+  delegated to `designer`.
+- `researcher` is not universal: simple, clear features without relevant
+  uncertainty may keep fast routing toward spec/implementation.
 - `designer` and `researcher` may run in parallel only if their results are
   independent.
 - `developer` does not act without acceptance criteria.
@@ -82,6 +95,29 @@ Criteria:
   or scope decisions are still missing.
 - Keep reasonable minimum validation and do not add mandatory review/evaluation
   unless the parent flow requires it.
+
+### `/test`
+
+Contract: auxiliary/subtask `developer` with testing/debugging skills.
+
+Criteria:
+
+- Design or run bounded validation for a task, bug, or diff.
+- For bugs, reproduce first with a test or observable evidence when viable.
+- May implement the minimum code needed if the test fails and scope is clear.
+- Does not replace `/feature` when research, design, spec, or scope decisions
+  are missing.
+
+### `/code-simplify`
+
+Contract: auxiliary/subtask `developer` with `code-simplification`.
+
+Criteria:
+
+- Simplify bounded code without changing observable behavior.
+- Do not mix simplification with new features or adjacent refactors.
+- Run reasonable validation to prove behavior was preserved.
+- If unrelated dead code is found, report it without deleting it.
 
 ## `/design`
 

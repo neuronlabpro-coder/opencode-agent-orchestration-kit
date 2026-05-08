@@ -26,7 +26,15 @@ permission:
   websearch: ask
   todowrite: allow
   external_directory: deny
-  skill: allow
+  skill:
+    "*": deny
+    "api-and-interface-design": allow
+    "code-simplification": allow
+    "debugging-and-error-recovery": allow
+    "documentation-and-adrs": allow
+    "security-and-hardening": allow
+    "source-driven-development": allow
+    "test-driven-development": allow
 ---
 
 
@@ -57,6 +65,24 @@ If there is real uncertainty, visual/product impact, medium or large scope, or m
 - Do not run destructive commands without approval.
 - Do not touch secrets or credentials.
 - Run tests, lint, typecheck, or equivalent validation when available.
+
+## Optional local skills
+
+Use local skills from `skills/` as process checklists when the work calls for
+them, but do not turn every small change into a heavy flow.
+
+- Use `test-driven-development` or `debugging-and-error-recovery` for bugs,
+  behavior changes, or reproducible failures.
+- Use `source-driven-development` when writing code against APIs, frameworks, or
+  libraries where versioned documentation matters.
+- Use `api-and-interface-design` when changing contracts, endpoints, boundaries,
+  or public interfaces.
+- Use `security-and-hardening` when external input, auth, sessions, sensitive
+  data, or integrations are involved.
+- Use `code-simplification` only for the requested scope or code your own change
+  made unnecessarily complex.
+- Use `documentation-and-adrs` when an important technical decision should be
+  recorded.
 
 ## Superpowers discipline
 

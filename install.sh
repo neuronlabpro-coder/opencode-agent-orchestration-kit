@@ -39,7 +39,7 @@ backup_dir=""
 if [ -d "$target" ] && find "$target" -mindepth 1 -maxdepth 1 | read -r _; then
   backup_dir="$target.backup.$ts"
   mkdir -p "$backup_dir"
-  for name in agents commands skills tools docs scripts AGENTS.md opencode.json; do
+  for name in agents commands skills tools docs scripts plugins references AGENTS.md opencode.json package.json package-lock.json tui.json; do
     if [ -e "$target/$name" ]; then
       cp -R "$target/$name" "$backup_dir/"
     fi
@@ -47,12 +47,12 @@ if [ -d "$target" ] && find "$target" -mindepth 1 -maxdepth 1 | read -r _; then
   echo "Backup created: $backup_dir"
 fi
 
-for dir in agents commands skills tools docs scripts; do
+for dir in agents commands skills tools docs scripts plugins references; do
   mkdir -p "$target/$dir"
   cp -R "$src/$dir/." "$target/$dir/"
 done
 
-for file in AGENTS.md opencode.json; do
+for file in AGENTS.md opencode.json package.json package-lock.json tui.json; do
   if [ -e "$target/$file" ] && [ "$force" -ne 1 ]; then
     echo "Skipping existing $target/$file (use --force to overwrite)."
   else
@@ -67,11 +67,16 @@ OpenCode orchestration kit installed to:
 
 Next steps:
   1. Copy env.example and export the variables you need.
-  2. Run: opencode auth login
-  3. Set OPEN_DESIGN_URL if you use /design.
-  4. Restart OpenCode so plugins and skills are discovered.
+  2. Run: (cd "$target" && npm install)
+  3. Run: opencode auth login
+  4. Set OPEN_DESIGN_URL if you use /design.
+  5. Restart OpenCode so plugins and skills are discovered.
 
 Superpowers plugin:
   If opencode.json was skipped, add this manually to your existing config:
   "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"]
+
+TUI token usage plugin:
+  If tui.json was skipped, add this manually to your existing TUI config:
+  "plugin": ["./plugins/token-tree-usage.tsx"]
 EOF

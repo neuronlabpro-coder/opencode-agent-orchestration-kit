@@ -14,6 +14,12 @@ permission:
     "git diff*": allow
   webfetch: allow
   websearch: allow
+  skill:
+    "*": deny
+    "api-and-interface-design": allow
+    "documentation-and-adrs": allow
+    "security-and-hardening": allow
+    "test-driven-development": allow
   external_directory: deny
 ---
 
@@ -34,6 +40,8 @@ Do not create a final spec if critical information is missing. If research, desi
 - Define acceptance criteria.
 - Define validation plan.
 - Avoid ambiguity before handoff to developer.
+- Use local skills as checklists when the plan touches contracts, security,
+  technical documentation, or testing strategy.
 
 ## Spec format
 
