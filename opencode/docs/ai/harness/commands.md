@@ -68,6 +68,17 @@ Criteria:
 - `debugger` enters only for traces, results, or concrete previous evidence.
 - Output is scoped specs, atomic tasks, and validation.
 
+## `/mvp-spec`
+
+Contract: `scoper -> researcher -> scoper synthesis -> specifier`.
+
+Criteria:
+
+- Same no-implementation boundary as `/scope`.
+- Produces a strict MVP spec with small 1-2 hour tasks.
+- Makes out of scope explicit.
+- Stops if research is not ready for spec.
+
 ## Visible Auxiliary/Subtask Commands
 
 These commands are visible slash commands, but they do not add mandatory phases

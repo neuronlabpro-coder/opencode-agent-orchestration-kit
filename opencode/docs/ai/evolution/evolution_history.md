@@ -62,3 +62,22 @@ Evidence:
 - Temporary positive and negative lifecycle fixtures passed/fail as expected.
 - `change_evaluation.json` records `keep` for the approved scope and documents
   the remaining transcript replay limitation for `/evolve`.
+
+## Iteration 013 - Doc Gardening Mechanical Checks
+
+Status: `keep`.
+
+Changes:
+
+- `scripts/check-harness.mjs` validates that `AGENTS.md` stays a short index.
+- The checker requires documentation coverage for visible agents and commands.
+- The checker validates local paths referenced by manifests and evaluations.
+- `docs/ai/harness/checks.md` documents these rules as mechanical doc gardening.
+
+Evidence:
+
+- `node --check scripts/check-harness.mjs` passed.
+- `node scripts/check-harness.mjs` passed.
+- A temporary negative control confirmed the expected failure when a command is
+  not documented.
+- `./scripts/check.sh` passed from the public repository root.

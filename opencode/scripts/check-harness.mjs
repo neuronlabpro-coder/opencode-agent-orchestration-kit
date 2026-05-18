@@ -20,6 +20,10 @@ function listMarkdown(dir) {
     .map((file) => path.join(dir, file));
 }
 
+function stripMarkdownExtension(rel) {
+  return path.basename(rel, ".md");
+}
+
 function fail(message) {
   errors.push(message);
 }
@@ -72,6 +76,40 @@ function frontmatterBlock(rel) {
 function requireFields(rel, object, fields) {
   for (const field of fields) {
     if (!object[field]) fail(`${rel}: missing ${field}`);
+  }
+}
+
+function checkAgentsIndex() {
+  const text = read("AGENTS.md");
+  const nonBlankLines = text.split("\n").filter((line) => line.trim()).length;
+  const maxNonBlankLines = 120;
+
+  if (nonBlankLines > maxNonBlankLines) {
+    fail(`AGENTS.md: must stay a short index (${nonBlankLines}/${maxNonBlankLines} non-blank lines)`);
+  }
+
+  for (const token of ["docs/ai/harness/", "docs/ai/evolution/"]) {
+    if (!text.includes(token)) fail(`AGENTS.md: missing index reference ${token}`);
+  }
+}
+
+function checkAgentDocsCoverage() {
+  const docs = read("docs/ai/harness/agents.md");
+  for (const rel of listMarkdown("agents")) {
+    const agent = stripMarkdownExtension(rel);
+    if (!docs.includes(`\`${agent}\``)) {
+      fail(`docs/ai/harness/agents.md: missing documented agent \`${agent}\``);
+    }
+  }
+}
+
+function checkCommandDocsCoverage() {
+  const docs = read("docs/ai/harness/commands.md");
+  for (const rel of listMarkdown("commands")) {
+    const command = stripMarkdownExtension(rel);
+    if (!docs.includes(`/${command}`)) {
+      fail(`docs/ai/harness/commands.md: missing documented command /${command}`);
+    }
   }
 }
 
@@ -199,6 +237,47 @@ function checkHarnessDocs() {
   }
 }
 
+function collectReferencedPathStrings(value, strings = [], key = "") {
+  if (typeof value === "string") {
+    if (key === "files" || key === "evidence") strings.push(value);
+  } else if (Array.isArray(value)) {
+    for (const item of value) collectReferencedPathStrings(item, strings, key);
+  } else if (value && typeof value === "object") {
+    for (const [childKey, item] of Object.entries(value)) {
+      collectReferencedPathStrings(item, strings, childKey);
+    }
+  }
+  return strings;
+}
+
+function localPathFromString(value) {
+  const trimmed = value.trim();
+  const match = trimmed.match(/^(.+?\.(?:md|json|mjs|js|ts|tsx|txt))(?:[:#,].*)?$/);
+  if (!match) return null;
+
+  const rel = match[1];
+  if (rel.startsWith("http://") || rel.startsWith("https://")) return null;
+  if (rel.startsWith("/")) return null;
+  return rel;
+}
+
+function checkReferencedJsonPaths(rel, json) {
+  if (!json) return;
+  const runRel = path.dirname(rel);
+
+  for (const value of collectReferencedPathStrings(json)) {
+    const localPath = localPathFromString(value);
+    if (!localPath) continue;
+
+    const candidates = localPath.startsWith("docs/")
+      ? [localPath]
+      : [path.join(runRel, localPath), localPath];
+    if (!candidates.some((candidate) => exists(candidate))) {
+      fail(`${rel}: referenced local path does not exist: ${localPath}`);
+    }
+  }
+}
+
 function validateManifest(rel) {
   const manifest = parseJson(rel);
   if (!manifest) return;
@@ -223,6 +302,7 @@ function validateManifest(rel) {
       if (change[field] === undefined) fail(`${prefix}: missing ${field}`);
     }
   }
+  checkReferencedJsonPaths(rel, manifest);
 }
 
 function checkEvolutionRuns() {
@@ -243,12 +323,17 @@ function checkEvolutionRuns() {
     if (hasManifest && !exists(`${rel}/change_evaluation.json`)) {
       fail(`${rel}: manifest exists without change_evaluation.json`);
     }
-    if (exists(`${rel}/change_evaluation.json`)) parseJson(`${rel}/change_evaluation.json`);
+    if (exists(`${rel}/change_evaluation.json`)) {
+      checkReferencedJsonPaths(`${rel}/change_evaluation.json`, parseJson(`${rel}/change_evaluation.json`));
+    }
   }
 }
 
 checkConfig();
+checkAgentsIndex();
 checkFrontmatter();
+checkAgentDocsCoverage();
+checkCommandDocsCoverage();
 checkLeadRouterContract();
 checkFeatureContract();
 checkPlanContract();
