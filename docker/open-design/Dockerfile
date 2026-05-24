@@ -16,19 +16,17 @@ RUN git clone https://github.com/nexu-io/open-design.git /app/open-design \
 WORKDIR /app/open-design
 
 RUN corepack enable \
-  && corepack prepare pnpm@10.33.2 --activate
+  && corepack prepare pnpm@10.33.2 --activate \
+  && pnpm install --frozen-lockfile=false
 
-# Instalar sin postinstall para evitar symlink roto del daemon
-RUN pnpm install --frozen-lockfile=false --ignore-scripts
+# 1. Compilar dependencias internas del monorepo
+RUN pnpm rebuild || true
 
-# 1. Compilar daemon primero
+# 2. Compilar daemon
 RUN cd apps/daemon && pnpm build
 
-# 2. Compilar web después
+# 3. Compilar web
 RUN cd apps/web && pnpm build
-
-# 3. Ejecutar postinstall ahora que daemon y web están compilados
-RUN pnpm rebuild || true
 
 RUN npm install -g "opencode-ai@$OPENCODE_AI_VERSION"
 
@@ -42,5 +40,4 @@ RUN mkdir -p /home/opencode/.config/opencode /home/opencode/.local/share/opencod
 USER opencode
 EXPOSE 7456
 
-# El daemon sirve el frontend compilado directamente
 CMD ["sh", "-lc", "node apps/daemon/dist/cli.js --port ${OD_PORT:-7456} --no-open"]
