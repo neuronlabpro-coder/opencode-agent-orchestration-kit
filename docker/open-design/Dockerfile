@@ -34,7 +34,10 @@ ENV OD_HOST=0.0.0.0
 ENV OD_PORT=7456
 ENV OPENCODE_CONFIG_DIR=/home/opencode/.config/opencode
 
-RUN mkdir -p /home/opencode/.config/opencode /home/opencode/.local/share/opencode /app/open-design/.od \
+# Crear directorios y dar permisos completos al usuario opencode
+RUN mkdir -p /home/opencode/.config/opencode \
+             /home/opencode/.local/share/opencode \
+             /app/open-design/.od/projects \
   && chown -R opencode:opencode /home/opencode /app/open-design
 
 USER opencode
