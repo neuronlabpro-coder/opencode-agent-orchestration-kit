@@ -6,13 +6,20 @@ services:
       - "7456:7456"
     environment:
       OD_HOST: ${OD_HOST:-0.0.0.0}
-      OD_PUBLIC_HOST: ${OD_PUBLIC_HOST:-http://192.168.1.50:7456}
+      OD_PUBLIC_HOST: ${OD_PUBLIC_HOST:-http://localhost:7456}
       OD_PORT: ${OD_PORT:-7456}
       OPENCODE_CONFIG_DIR: ${OPENCODE_CONFIG_DIR:-/home/opencode/.config/opencode}
-      OPENCODE_MODEL: ${OPENCODE_MODEL:-openai/gpt-5.5}
-      OPENCODE_SMALL_MODEL: ${OPENCODE_SMALL_MODEL:-openai/gpt-5.5}
+      OPENCODE_MODEL: ${OPENCODE_MODEL:-tokaine/qwen-flagship}
+      OPENCODE_SMALL_MODEL: ${OPENCODE_SMALL_MODEL:-tokaine/qwen-flagship}
     volumes:
       - ./data:/app/open-design/.od
       - ./opencode-od:/home/opencode/.config/opencode:ro
       - ./opencode-auth:/home/opencode/.local/share/opencode
+    user: root
+    command: >
+      sh -lc "
+        mkdir -p /app/open-design/.od/projects &&
+        chown -R opencode:opencode /app/open-design/.od &&
+        su opencode -c 'node /app/open-design/apps/daemon/dist/cli.js --port ${OD_PORT:-7456} --no-open'
+      "
     restart: unless-stopped
