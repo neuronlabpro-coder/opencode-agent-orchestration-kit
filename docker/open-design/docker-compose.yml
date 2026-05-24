@@ -20,6 +20,6 @@ services:
       sh -lc "
         mkdir -p /app/open-design/.od/projects &&
         chown -R opencode:opencode /app/open-design/.od &&
-        su opencode -c 'node /app/open-design/apps/daemon/dist/cli.js --port ${OD_PORT:-7456} --no-open'
+        su opencode -s /bin/sh -c 'OD_HOST=0.0.0.0 node /app/open-design/apps/daemon/dist/cli.js --port 7456 --no-open'
       "
     restart: unless-stopped
