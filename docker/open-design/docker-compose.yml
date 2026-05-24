@@ -15,11 +15,4 @@ services:
       - ./data:/app/open-design/.od
       - ./opencode-od:/home/opencode/.config/opencode:ro
       - ./opencode-auth:/home/opencode/.local/share/opencode
-    user: root
-    command: >
-      sh -lc "
-        mkdir -p /app/open-design/.od/projects &&
-        chown -R opencode:opencode /app/open-design/.od &&
-        su opencode -s /bin/sh -c 'OD_HOST=0.0.0.0 node /app/open-design/apps/daemon/dist/cli.js --port 7456 --no-open'
-      "
     restart: unless-stopped
