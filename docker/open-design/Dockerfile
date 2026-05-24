@@ -7,7 +7,7 @@ RUN apt-get update \
 RUN useradd -m -s /bin/bash opencode
 WORKDIR /app
 
-ARG OPEN_DESIGN_REF=1592beb96134f9d49b8a90dc6a359b94a69af57e
+ARG OPEN_DESIGN_REF=main
 ARG OPENCODE_AI_VERSION=1.14.31
 
 RUN git clone https://github.com/nexu-io/open-design.git /app/open-design \
@@ -47,4 +47,4 @@ RUN mkdir -p /home/opencode/.config/opencode /home/opencode/.local/share/opencod
 USER opencode
 EXPOSE 7456
 
-CMD ["sh", "-lc", "node apps/daemon/dist/cli.js --port ${OD_PORT:-7456} --no-open"]
+CMD ["sh", "-lc", "node $(ls apps/daemon/dist/cli.js daemon/dist/cli.js apps/daemon/cli.js daemon/cli.js 2>/dev/null | head -1) --port ${OD_PORT:-7456} --no-open"]
