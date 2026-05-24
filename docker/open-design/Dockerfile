@@ -7,29 +7,30 @@ RUN apt-get update \
 RUN useradd -m -s /bin/bash opencode
 WORKDIR /app
 
-RUN git clone https://github.com/nexu-io/open-design.git /app/open-design
+ARG OPEN_DESIGN_REF=main
+ARG OPENCODE_AI_VERSION=1.14.31
+
+RUN git clone https://github.com/nexu-io/open-design.git /app/open-design \
+  && cd /app/open-design \
+  && git checkout "$OPEN_DESIGN_REF"
 WORKDIR /app/open-design
 
 RUN corepack enable \
-  && corepack prepare pnpm@10.33.2 --activate \
-  && pnpm install --frozen-lockfile=false \
-  && npm install -g opencode-ai@latest
+  && corepack prepare pnpm@10.33.2 --activate
 
-# Make the daemon listen on OD_HOST when upstream exposes host/port constants.
-# This is intentionally best-effort because upstream may change file layout.
-RUN node - <<'NODE'
-const fs = require('fs')
-const candidates = ['apps/daemon/cli.js', 'apps/daemon/server.js', 'daemon/cli.js', 'daemon/server.js']
-for (const file of candidates) {
-  if (!fs.existsSync(file)) continue
-  let text = fs.readFileSync(file, 'utf8')
-  text = text.replace(/127\.0\.0\.1/g, "process.env.OD_HOST || '0.0.0.0'")
-  text = text.replace(/localhost/g, "process.env.OD_HOST || '0.0.0.0'")
-  fs.writeFileSync(file, text)
-}
-NODE
+# Instalar sin postinstall para evitar symlink roto del daemon
+RUN pnpm install --frozen-lockfile=false --ignore-scripts
 
-RUN pnpm build || pnpm -r build
+# 1. Compilar daemon primero
+RUN cd apps/daemon && pnpm build
+
+# 2. Compilar web después
+RUN cd apps/web && pnpm build
+
+# 3. Ejecutar postinstall ahora que daemon y web están compilados
+RUN pnpm rebuild || true
+
+RUN npm install -g "opencode-ai@$OPENCODE_AI_VERSION"
 
 ENV OD_HOST=0.0.0.0
 ENV OD_PORT=7456
@@ -41,4 +42,5 @@ RUN mkdir -p /home/opencode/.config/opencode /home/opencode/.local/share/opencod
 USER opencode
 EXPOSE 7456
 
-CMD ["sh", "-lc", "node apps/daemon/cli.js --host ${OD_HOST:-0.0.0.0} --port ${OD_PORT:-7456} --no-open || node daemon/cli.js --host ${OD_HOST:-0.0.0.0} --port ${OD_PORT:-7456} --no-open"]
+# El daemon sirve el frontend compilado directamente
+CMD ["sh", "-lc", "node apps/daemon/dist/cli.js --port ${OD_PORT:-7456} --no-open"]
