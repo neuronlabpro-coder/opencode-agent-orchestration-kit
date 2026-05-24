@@ -2,11 +2,10 @@ services:
   open-design:
     build: .
     container_name: open-design
-    ports:
-      - "7456:7456"
+    network_mode: host
     environment:
-      OD_HOST: ${OD_HOST:-0.0.0.0}
-      OD_PUBLIC_HOST: ${OD_PUBLIC_HOST:-http://localhost:7456}
+      OD_HOST: 0.0.0.0
+      OD_PUBLIC_HOST: ${OD_PUBLIC_HOST:-https://opendesign.shyntai.com}
       OD_PORT: ${OD_PORT:-7456}
       OPENCODE_CONFIG_DIR: ${OPENCODE_CONFIG_DIR:-/home/opencode/.config/opencode}
       OPENCODE_MODEL: ${OPENCODE_MODEL:-tokaine/qwen-flagship}
